@@ -2,12 +2,11 @@
 .# Incluye entornos virtuales, archivos compilados, caches, IDEs, secretos y artefactos de build
 
 # Entornos virtuales
+# Entornos virtuales
 venv/
-ENV/
-env/
 .venv/
-env.bak/
-venv.bak/
+env/
+ENV/
 
 # Byte-compiled / optimized / cache files
 __pycache__/
