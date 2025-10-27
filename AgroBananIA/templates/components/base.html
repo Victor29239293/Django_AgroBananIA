@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}BanaIA{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+     <div class="logo"><span  >AgroBanan</span>IA</div>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#caracteristicas">Características</a></li>
+        <li><a href="#como-funciona">Cómo Funciona</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <a href="" class="nav-btn">Iniciar Sesión</a>
+      <div class="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer" id="contacto">
+      <div class="footer-content">
+        <div>
+          <h3>AgroBananIA</h3>
+          <p>
+            IA avanzada para proteger, monitorear y mejorar tus cultivos de
+            banano. Tecnología al servicio del agro.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3>Enlaces Rápidos</h3>
+          <a href="#inicio">Inicio</a><br />
+          <a href="#caracteristicas">Características</a><br />
+          <a href="#como-funciona">Cómo Funciona</a><br />
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div>
+          <h3>Contacto</h3>
+          <p><i class="fas fa-envelope"></i> contacto@agrobanania.tech</p>
+          <p><i class="fas fa-phone-alt"></i> +593 987 654 321</p>
+          <p><i class="fas fa-map-marker-alt"></i> Guayas, Ecuador</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 <strong>AgroBananIA</strong>. Todos los derechos
+          reservados.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
