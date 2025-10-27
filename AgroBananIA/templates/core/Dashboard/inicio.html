@@ -1,0 +1,773 @@
+{% extends 'components/base_dashboard.html' %} 
+{% load static %} 
+{% block title%} Dashboard - Información de Plantación {% endblock %} 
+{% block breadcrumb%}Inicio {% endblock %} 
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'css/core/Dashboard/Inicio/index.css' %}"
+/>
+{% endblock %} {% block content %}
+<div class="dashboard-container">
+  <!-- Header del Dashboard -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="header-info">
+        <h1>🌱 Mi Plantación Dashboard</h1>
+        <p>
+          Monitoreo integral de tu finca • Última actualización:
+          <span id="currentTime">17:00:00</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Card de Información de la Plantación Rediseñada -->
+    <div class="dashboard-card plantation-info-card">
+      <!-- Header Premium -->
+      <div class="card-header-premium">
+        <div class="header-icon-wrapper">
+          <div class="icon-background"></div>
+          <div class="card-icon-premium">🏡</div>
+        </div>
+        <div class="header-text">
+          <h3 class="card-title-premium">Información de la Plantación</h3>
+          <p class="card-subtitle-premium">
+            <span class="subtitle-icon">📊</span>
+            Datos generales y ubicación de tu finca
+          </p>
+        </div>
+        <div class="header-badge">
+          <span class="badge-active">●</span> Activo
+        </div>
+      </div>
+
+      <!-- Información Principal con diseño moderno -->
+      <div class="info-grid-premium">
+        <!-- Nombre de la Finca - Destacado -->
+        <div class="info-card featured-card">
+          <div class="info-card-header">
+            <span class="info-icon">🌾</span>
+            <span class="info-label-premium">Nombre de la Finca</span>
+          </div>
+          <div class="info-value-premium featured">Finca El Paraíso</div>
+          <div class="info-decoration"></div>
+        </div>
+
+        <!-- Ubicación -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">📍</span>
+            <span class="info-label-premium">Ubicación</span>
+          </div>
+          <div class="info-value-premium">Zona 1, Finca El Paraíso</div>
+          <div class="info-decoration"></div>
+        </div>
+
+        <!-- Extensión -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">📏</span>
+            <span class="info-label-premium">Extensión Total</span>
+          </div>
+          <div class="info-value-premium">
+            <span class="value-highlight">10</span> hectáreas
+          </div>
+          <div class="info-decoration"></div>
+        </div>
+
+        <!-- Fecha de Registro -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">📅</span>
+            <span class="info-label-premium">Fecha de Registro</span>
+          </div>
+          <div class="info-value-premium">01/01/2020</div>
+          <div class="info-decoration"></div>
+        </div>
+
+        <!-- Coordenadas -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">🌐</span>
+            <span class="info-label-premium">Coordenadas GPS</span>
+          </div>
+          <div class="info-value-premium coordinates">
+            <span class="coordinate-item">Lat: 17.123456</span>
+            <span class="coordinate-item">Lng: -88.123456</span>
+          </div>
+          <div class="info-decoration"></div>
+        </div>
+
+        <!-- Propietario -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">👤</span>
+            <span class="info-label-premium">Propietario</span>
+          </div>
+          <div class="info-value-premium">Juan Pérez</div>
+          <div class="info-decoration"></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-header">
+            <span class="info-icon">👤</span>
+            <span class="info-label-premium">Propietario</span>
+          </div>
+          <div class="info-value-premium">Juan Pérez</div>
+          <div class="info-decoration"></div>
+        </div>
+      </div>
+
+      <!-- Status Bar Premium -->
+      <div class="status-bar-premium">
+        <div class="status-content">
+          <div class="status-indicator-premium">
+            <span class="status-pulse"></span>
+            <span class="status-dot-premium"></span>
+          </div>
+          <div class="status-text">
+            <span class="status-title">Sistema Activo</span>
+            <span class="status-description">Monitoreo en tiempo real</span>
+          </div>
+        </div>
+        <div class="status-actions">
+          <button class="status-btn" title="Ver más detalles">
+            <span>📈</span> Detalles
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ubicación en Mapa - Diseño Premium -->
+    <div class="dashboard-card map-card-premium">
+      <!-- Header Premium del Mapa -->
+      <div class="card-header-premium">
+        <div class="header-icon-wrapper">
+          <div class="icon-background map-icon-bg"></div>
+          <div class="card-icon-premium">🗺️</div>
+        </div>
+        <div class="header-text">
+          <h3 class="card-title-premium">Ubicación Geográfica</h3>
+          <p class="card-subtitle-premium">
+            <span class="subtitle-icon">📍</span>
+            Localización exacta de las plantaciones
+          </p>
+        </div>
+        <div class="header-badge map-badge">
+          <span class="badge-active">●</span> GPS Activo
+        </div>
+      </div>
+
+      <!-- Contenedor del Mapa con diseño mejorado -->
+      <div class="map-wrapper-premium">
+        <div class="map-container-premium" id="plantationMap"></div>
+        
+        <!-- Overlay de carga -->
+        <div class="map-loading-overlay" id="mapLoadingOverlay">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Cargando mapa interactivo...</p>
+        </div>
+      </div>
+
+      <!-- Barra de estado del mapa mejorada -->
+      <div class="map-status-bar" id="mapStatus">
+        <div class="status-icon-wrapper">
+          <div class="status-spinner"></div>
+          <span class="status-icon">⏳</span>
+        </div>
+        <div class="status-info">
+          <span class="status-text-main">Inicializando sistema de mapas</span>
+          <span class="status-text-sub">Conectando con servidor de geolocalización</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Scripts de Leaflet y funcionalidad del mapa -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3  /dist/leaflet.markercluster.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      console.log("=== INICIO DEBUG MAPA LEAFLET - TODAS LAS PLANTACIONES ===");
+
+      // Variables para el mapa
+      let map;
+      let markers = [];
+      let plantacionesData = [];
+
+      // Función para actualizar el status del mapa
+      function updateMapStatus(message, type = 'info', subMessage = '') {
+          const statusElement = document.getElementById('mapStatus');
+          const loadingOverlay = document.getElementById('mapLoadingOverlay');
+          
+          const icons = {
+              'success': '✅',
+              'error': '❌',
+              'warning': '⚠️',
+              'info': '⏳'
+          };
+
+          if (statusElement) {
+              // Actualizar clases del status bar
+              statusElement.className = 'map-status-bar ' + type;
+              
+              // Actualizar contenido
+              const statusIcon = statusElement.querySelector('.status-icon');
+              const statusTextMain = statusElement.querySelector('.status-text-main');
+              const statusTextSub = statusElement.querySelector('.status-text-sub');
+              const statusSpinner = statusElement.querySelector('.status-spinner');
+              
+              if (statusIcon) statusIcon.textContent = icons[type];
+              if (statusTextMain) statusTextMain.textContent = message;
+              if (statusTextSub) statusTextSub.textContent = subMessage || 'Procesando información geográfica';
+              
+              // Ocultar spinner en success
+              if (statusSpinner) {
+                  statusSpinner.style.display = type === 'success' ? 'none' : 'block';
+              }
+          }
+          
+          // Ocultar overlay de carga cuando sea exitoso
+          if (type === 'success' && loadingOverlay) {
+              setTimeout(() => {
+                  loadingOverlay.classList.add('hidden');
+              }, 500);
+          }
+      }
+
+      // Función para obtener coordenadas de todas las plantaciones desde Django
+      function getPlantacionesData() {
+          try {
+              // Obtener datos de todas las plantaciones pasadas desde Django
+              const plantacionesRaw = {{ coordenadas_plantaciones|safe }};
+              console.log("Datos de plantaciones desde Django:", plantacionesRaw);
+
+              if (!plantacionesRaw || !Array.isArray(plantacionesRaw)) {
+                  throw new Error("No se encontraron datos de plantaciones válidos");
+              }
+
+              // Procesar y validar cada plantación
+              plantacionesData = plantacionesRaw.map((plantacion, index) => {
+                  const lat = parseFloat(plantacion.latitud);
+                  const lng = parseFloat(plantacion.longitud);
+
+                  // Validar coordenadas
+                  if (isNaN(lat) || isNaN(lng)) {
+                      console.warn(`Plantación ${plantacion.id}: coordenadas inválidas`);
+                      return null;
+                  }
+
+                  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                      console.warn(`Plantación ${plantacion.id}: coordenadas fuera de rango`);
+                      return null;
+                  }
+
+                  return {
+                      id: plantacion.id,
+                      nombre: plantacion.nombre || `Plantación ${plantacion.id}`,
+                      lat: lat,
+                      lng: lng,
+                      ubicacion: plantacion.ubicacion || 'Ubicación no especificada',
+                      extension: plantacion.extension_hectareas || 'No especificado',
+                      fecha_registro: plantacion.fecha_registro || 'No especificado',
+                      propietario: plantacion.propietario || 'Sin propietario'
+                  };
+              }).filter(plantacion => plantacion !== null);
+
+              console.log(`✓ ${plantacionesData.length} plantaciones válidas procesadas`);
+              return plantacionesData;
+
+          } catch (error) {
+              console.error("❌ Error al obtener datos de plantaciones:", error);
+              updateMapStatus('Error al cargar plantaciones', 'error', error.message);
+              return [];
+          }
+      }
+
+      // Función para crear marcadores personalizados según el índice
+      function createCustomIcon(index, isMain = false) {
+          const icons = ['🏡', '🌱', '🌾', '🍃', '🌳', '🌿', '🌽', '🍀', '🌸', '🌺'];
+          const selectedIcon = isMain ? '🏡' : icons[index % icons.length];
+
+          return L.divIcon({
+              html: `<div class="custom-marker ${isMain ? 'main-marker' : 'secondary-marker'}">${selectedIcon}</div>`,
+              iconSize: isMain ? [35, 35] : [30, 30],
+              className: 'custom-div-icon'
+          });
+      }
+
+      // Función para crear contenido del popup
+      function createPopupContent(plantacion, isMain = false) {
+          const mainBadge = isMain ? '<span style="background: #059669; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">PRINCIPAL</span>' : '';
+
+          return `
+              <div style="text-align: center; min-width: 220px;">
+                  <div style="margin-bottom: 8px;">
+                      ${mainBadge}
+                  </div>
+                  <h4 style="margin: 0 0 8px 0; color: ${isMain ? '#059669' : '#7c3aed'};">${plantacion.nombre}</h4>
+                  <p style="margin: 4px 0; color: #374151;">📍 ${plantacion.ubicacion}</p>
+                  <p style="margin: 4px 0; color: #374151;">👤 ${plantacion.propietario}</p>
+                  <hr style="margin: 8px 0; border: none; border-top: 1px solid #d1d5db;">
+                  <div style="text-align: left; font-size: 13px; color: #6b7280;">
+                      <div style="margin: 2px 0;"><strong>ID:</strong> ${plantacion.id}</div>
+                      <div style="margin: 2px 0;"><strong>Extensión:</strong> ${plantacion.extension}</div>
+                      <div style="margin: 2px 0;"><strong>Registro:</strong> ${plantacion.fecha_registro}</div>
+                      <div style="margin: 4px 0; padding-top: 4px; border-top: 1px solid #e5e7eb;">
+                          <strong>Coordenadas:</strong><br>
+                          Lat: ${plantacion.lat.toFixed(6)}<br>
+                          Lng: ${plantacion.lng.toFixed(6)}
+                      </div>
+                  </div>
+              </div>
+          `;
+      }
+
+      // Función para calcular el centro del mapa basado en todas las plantaciones
+      function calculateMapCenter(plantaciones) {
+          if (plantaciones.length === 0) {
+              return { lat: -0.1807, lng: -78.4678, zoom: 6 }; // Ecuador por defecto
+          }
+
+          if (plantaciones.length === 1) {
+              return {
+                  lat: plantaciones[0].lat,
+                  lng: plantaciones[0].lng,
+                  zoom: 15
+              };
+          }
+
+          // Calcular centro promedio
+          const latSum = plantaciones.reduce((sum, p) => sum + p.lat, 0);
+          const lngSum = plantaciones.reduce((sum, p) => sum + p.lng, 0);
+
+          const centerLat = latSum / plantaciones.length;
+          const centerLng = lngSum / plantaciones.length;
+
+          // Calcular bounds para determinar zoom apropiado
+          const lats = plantaciones.map(p => p.lat);
+          const lngs = plantaciones.map(p => p.lng);
+
+          const latRange = Math.max(...lats) - Math.min(...lats);
+          const lngRange = Math.max(...lngs) - Math.min(...lngs);
+          const maxRange = Math.max(latRange, lngRange);
+
+          // Determinar zoom basado en el rango
+          let zoom = 10;
+          if (maxRange < 0.01) zoom = 15;
+          else if (maxRange < 0.1) zoom = 12;
+          else if (maxRange < 1) zoom = 8;
+          else if (maxRange < 5) zoom = 6;
+          else zoom = 4;
+
+          return { lat: centerLat, lng: centerLng, zoom: zoom };
+      }
+
+      // Función para inicializar el mapa con todas las plantaciones
+      function initializeMapWithPlantations(plantaciones) {
+          try {
+              console.log(`Inicializando mapa con ${plantaciones.length} plantaciones`);
+
+              // Obtener ID de la plantación principal (actual)
+              const plantacionPrincipalId = "{{ plantacion.id|default:'0' }}";
+              console.log("ID de plantación principal:", plantacionPrincipalId);
+
+              // Buscar la plantación principal
+              const mainPlantation = plantaciones.find(p => p.id.toString() === plantacionPrincipalId.toString());
+
+              // Calcular centro del mapa
+              let mapCenter;
+              if (mainPlantation) {
+                  mapCenter = { lat: mainPlantation.lat, lng: mainPlantation.lng, zoom: 15 };
+                  console.log("Usando plantación principal como centro:", mapCenter);
+              } else {
+                  mapCenter = calculateMapCenter(plantaciones);
+                  console.log("Centro del mapa calculado (promedio):", mapCenter);
+              }
+
+              // Crear el mapa
+              map = L.map('plantationMap').setView([mapCenter.lat, mapCenter.lng], mapCenter.zoom);
+
+              // Agregar capa de tiles
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  maxZoom: 19,
+                  minZoom: 1
+              }).addTo(map);
+
+              // Crear grupo de clúster
+              const markerCluster = L.markerClusterGroup({
+                  spiderfyOnMaxZoom: true,
+                  showCoverageOnHover: true,
+                  zoomToBoundsOnClick: true,
+                  maxClusterRadius: 40
+              });
+
+              // Agregar marcadores para cada plantación
+              plantaciones.forEach((plantacion, index) => {
+                  const isMainPlantation = plantacion.id.toString() === plantacionPrincipalId.toString();
+
+                  // Crear icono personalizado
+                  const customIcon = createCustomIcon(index, isMainPlantation);
+
+                  // Crear marcador
+                  const marker = L.marker([plantacion.lat, plantacion.lng], {
+                      icon: customIcon
+                  });
+
+                  // Crear popup
+                  const popupContent = createPopupContent(plantacion, isMainPlantation);
+                  marker.bindPopup(popupContent);
+
+                  // Si es la plantación principal, abrir el popup
+                  if (isMainPlantation) {
+                      marker.openPopup();
+                  }
+
+                  // Agregar marcador al clúster
+                  markerCluster.addLayer(marker);
+                  markers.push(marker);
+
+                  console.log(`✓ Marcador agregado para plantación ${plantacion.id} (${isMainPlantation ? 'PRINCIPAL' : 'secundaria'})`);
+              });
+
+              // Agregar el clúster al mapa
+              map.addLayer(markerCluster);
+
+              // Si hay múltiples plantaciones y no hay una principal, ajustar la vista para mostrar todas
+              if (!mainPlantation && plantaciones.length > 1) {
+                  const group = new L.featureGroup(markers);
+                  map.fitBounds(group.getBounds().pad(0.1));
+              }
+
+              // Eventos del mapa
+              map.on('load', function() {
+                  console.log('✓ Mapa cargado correctamente');
+                  updateMapStatus('Mapa cargado exitosamente', 'success', `${plantaciones.length} plantaciones georeferenciadas`);
+              });
+
+              map.on('zoomend', function() {
+                  console.log(`Zoom cambiado a: ${map.getZoom()}`);
+              });
+
+              // Forzar invalidación del tamaño
+              setTimeout(() => {
+                  map.invalidateSize();
+                  updateMapStatus('Sistema GPS activo', 'success', `${plantaciones.length} plantaciones cargadas correctamente`);
+              }, 100);
+
+              return true;
+
+          } catch (error) {
+              console.error('❌ Error al inicializar el mapa:', error);
+              updateMapStatus('Error al inicializar mapa', 'error', error.message);
+              return false;
+          }
+      }
+
+      // Función principal para procesar todas las plantaciones
+      function processAllPlantations() {
+          try {
+              updateMapStatus('Cargando plantaciones', 'info', 'Obteniendo datos del servidor');
+
+              // Obtener datos de plantaciones
+              const plantaciones = getPlantacionesData();
+
+              if (plantaciones.length === 0) {
+                  throw new Error("No se encontraron plantaciones válidas");
+              }
+
+              console.log(`✓ ${plantaciones.length} plantaciones válidas encontradas`);
+              updateMapStatus('Plantaciones encontradas', 'info', `Procesando ${plantaciones.length} ubicaciones`);
+
+              // Inicializar mapa con todas las plantaciones
+              return initializeMapWithPlantations(plantaciones);
+
+          } catch (error) {
+              console.warn("⚠️ Error al procesar plantaciones:", error.message);
+              updateMapStatus('Usando ubicación de respaldo', 'warning', error.message);
+
+              // Coordenadas de respaldo (Ecuador)
+              const fallbackPlantation = [{
+                  id: 'fallback',
+                  nombre: 'Ubicación de Respaldo',
+                  lat: -0.1807,
+                  lng: -78.4678,
+                  ubicacion: 'Quito, Ecuador',
+                  extension: 'N/A',
+                  fecha_registro: 'N/A',
+                  propietario: 'N/A'
+              }];
+
+              console.log("Usando plantación de respaldo");
+              updateMapStatus('Ubicación de respaldo activa', 'warning', 'Quito, Ecuador - Sin datos de plantaciones');
+
+              return initializeMapWithPlantations(fallbackPlantation);
+          }
+      }
+
+      // Ejecutar inicialización
+      console.log("Iniciando procesamiento de plantaciones...");
+
+      const mapInitialized = processAllPlantations();
+
+      if (!mapInitialized) {
+          console.error("❌ No se pudo inicializar el mapa");
+          updateMapStatus('Error crítico del sistema', 'error', 'No se pudo cargar el mapa');
+
+          // Ocultar overlay y mostrar mensaje de error
+          const loadingOverlay = document.getElementById('mapLoadingOverlay');
+          if (loadingOverlay) {
+              loadingOverlay.classList.add('hidden');
+          }
+
+          // Mostrar mensaje de error en el contenedor del mapa
+          const mapContainer = document.getElementById('plantationMap');
+          if (mapContainer) {
+              mapContainer.innerHTML = `
+                  <div style="
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100%;
+                      background: #f9fafb;
+                      border: 2px dashed #d1d5db;
+                      border-radius: 8px;
+                      color: #6b7280;
+                      text-align: center;
+                      padding: 20px;
+                  ">
+                      <div style="font-size: 48px; margin-bottom: 16px;">🗺️</div>
+                      <h3 style="margin: 0 0 8px 0; color: #374151;">No se pudo cargar el mapa</h3>
+                      <p style="margin: 0; font-size: 14px;">Verificar coordenadas de las plantaciones</p>
+                  </div>
+              `;
+          }
+      }
+
+      console.log("=== FIN DEBUG MAPA LEAFLET - TODAS LAS PLANTACIONES ===");
+      
+      // Agregar funcionalidad a los botones de control del mapa
+      setupMapControls();
+  });
+
+  // Función para configurar los controles del mapa
+  function setupMapControls() {
+      const mapControlBtns = document.querySelectorAll('.map-control-btn');
+      
+      mapControlBtns.forEach((btn, index) => {
+          btn.addEventListener('click', function() {
+              // Efecto visual de clic
+              this.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                  this.style.transform = '';
+              }, 150);
+              
+              // Funcionalidad según el botón
+              switch(index) {
+                  case 0: // Centrar mapa
+                      if (typeof map !== 'undefined' && map) {
+                          console.log('Centrando mapa...');
+                          updateMapStatus('Centrando vista del mapa', 'info', 'Ajustando zoom y posición');
+                          
+                          // Si hay marcadores, centrar en ellos
+                          if (markers && markers.length > 0) {
+                              const group = new L.featureGroup(markers);
+                              map.fitBounds(group.getBounds().pad(0.1));
+                          }
+                          
+                          setTimeout(() => {
+                              updateMapStatus('Vista centrada correctamente', 'success', 'Mapa ajustado');
+                          }, 1000);
+                      }
+                      break;
+                      
+                  case 1: // Vista satélite (simulado)
+                      console.log('Cambiando a vista satélite...');
+                      updateMapStatus('Vista satélite no disponible', 'warning', 'Función en desarrollo');
+                      setTimeout(() => {
+                          updateMapStatus('Sistema GPS activo', 'success', 'Usando vista de mapa estándar');
+                      }, 2000);
+                      break;
+                      
+                  case 2: // Pantalla completa
+                      if (typeof map !== 'undefined' && map) {
+                          const mapContainer = document.querySelector('.map-wrapper-premium');
+                          if (mapContainer) {
+                              if (!document.fullscreenElement) {
+                                  mapContainer.requestFullscreen().then(() => {
+                                      console.log('Modo pantalla completa activado');
+                                      setTimeout(() => {
+                                          map.invalidateSize();
+                                      }, 100);
+                                  }).catch(err => {
+                                      console.error('Error al activar pantalla completa:', err);
+                                      updateMapStatus('No se pudo activar pantalla completa', 'warning', 'Intente de nuevo');
+                                  });
+                              } else {
+                                  document.exitFullscreen();
+                                  console.log('Modo pantalla completa desactivado');
+                                  setTimeout(() => {
+                                      map.invalidateSize();
+                                  }, 100);
+                              }
+                          }
+                      }
+                      break;
+              }
+          });
+      });
+  }
+
+  // Función para actualizar la hora actual
+  function updateCurrentTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+      });
+
+      const timeElement = document.getElementById('currentTime');
+      if (timeElement) {
+          timeElement.textContent = timeString;
+      }
+  }
+
+  // Inicializar tiempo y actualizar cada segundo
+  updateCurrentTime();
+  setInterval(updateCurrentTime, 1000);
+
+  // Función para redimensionar el mapa cuando cambia el tamaño de la ventana
+  window.addEventListener('resize', function() {
+      if (typeof map !== 'undefined' && map) {
+          setTimeout(() => {
+              map.invalidateSize();
+              console.log('Mapa redimensionado');
+          }, 100);
+      }
+  });
+
+  // Agregar estilos adicionales para el mapa
+  const mapStyles = `
+  <style>
+      .custom-div-icon {
+          background: transparent;
+          border: none;
+          font-size: 24px;
+          text-align: center;
+      }
+
+      .custom-marker {
+          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+          transition: transform 0.2s ease;
+      }
+
+      .main-marker {
+          font-size: 28px;
+          filter: drop-shadow(0 0 8px rgba(5, 150, 105, 0.8));
+      }
+
+      .secondary-marker {
+          font-size: 24px;
+          filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.6));
+      }
+
+      .custom-marker:hover {
+          transform: scale(1.2);
+      }
+
+      .leaflet-popup-content-wrapper {
+          border-radius: 12px;
+          box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+          border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .leaflet-popup-tip {
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      #plantationMap {
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      }
+
+      .leaflet-control-zoom {
+          border: none !important;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+          border-radius: 8px !important;
+      }
+
+      .leaflet-control-zoom a {
+          border-radius: 6px !important;
+          border: none !important;
+          background: white !important;
+          color: #374151 !important;
+          font-weight: bold !important;
+          transition: all 0.2s ease !important;
+      }
+
+      .leaflet-control-zoom a:hover {
+          background: #f3f4f6 !important;
+          color: #059669 !important;
+          transform: scale(1.05);
+      }
+
+      .leaflet-control-zoom a:first-child {
+          border-bottom: 1px solid #e5e7eb !important;
+      }
+
+      /* Animación para los marcadores */
+      @keyframes markerPulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+      }
+
+      .main-marker {
+          animation: markerPulse 2s infinite;
+      }
+
+      /* Estilos para el clúster */
+      .marker-cluster-small {
+          background-color: rgba(181, 226, 140, 0.6);
+      }
+      .marker-cluster-small div {
+          background-color: rgba(110, 204, 57, 0.6);
+      }
+      .marker-cluster-medium {
+          background-color: rgba(241, 211, 87, 0.6);
+      }
+      .marker-cluster-medium div {
+          background-color: rgba(240, 194, 12, 0.6);
+      }
+      .marker-cluster-large {
+          background-color: rgba(253, 156, 115, 0.6);
+      }
+      .marker-cluster-large div {
+          background-color: rgba(241, 128, 23, 0.6);
+      }
+  </style>
+  `;
+
+  // Insertar estilos en el head
+  document.head.insertAdjacentHTML('beforeend', mapStyles);
+</script>
+{% endblock %}

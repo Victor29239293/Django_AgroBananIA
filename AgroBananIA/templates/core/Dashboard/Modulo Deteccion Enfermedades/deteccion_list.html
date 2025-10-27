@@ -1,0 +1,100 @@
+{% extends 'components/base_dashboard.html' %}
+{% load static %}
+{% block title %}Lista de Análisis Realizados{% endblock %}
+{% block breadcrumb %}Análisis{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/core/Dashboard/Modulo Deteccion Enfermedades/deteccion_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+  <div class="page-header">
+    <h1 class="page-title">🔬 Análisis de Enfermedades</h1>
+    <p class="page-subtitle">Gestión y seguimiento de análisis realizados en tus plantaciones</p>
+  </div>
+
+  <div class="analysis-container">
+    <div class="floating-elements"></div>
+    <div class="container-header">
+      <a href="{% url 'core:deteccion_analizar' %}" class="add-analysis-btn">
+      Nuevo Análisis
+      </a>
+    </div>
+
+    {% if page_obj %}
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-value">{{ page_obj.paginator.count }}</span>
+          <span class="stat-label">Total Análisis</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ page_obj.paginator.num_pages }}</span>
+          <span class="stat-label">Páginas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ page_obj.number }}</span>
+          <span class="stat-label">Página Actual</span>
+        </div>
+      </div>
+
+      <div class="analysis-grid">
+        {% for analisis_item in page_obj %}
+        <div class="analysis-card">
+          <div class="card-header">
+            <div class="diagnosis-badge">
+              🦠 {{ analisis_item.enfermedad_detectada }}
+            </div>
+            <div class="probability-indicator">
+              <div class="probability-circle probability-low">
+               ID: {{ analisis_item.id }}
+              </div>
+            </div>
+          </div>
+
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="detail-label">Fecha de Análisis</span>
+              <span class="detail-value">📅 {{ analisis_item.fecha_analisis|date:"d/m/Y" }}</span>
+            </div>
+            <div class="detail-item">
+             
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <a href="{% url 'core:detalle_analisis' analisis_item.id %}" class="view-analysis-btn">
+              👁️ Ver Detalles
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="pagination-container">
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+            <a href="?page=1">⏮️ Primero</a>
+            <a href="?page={{ page_obj.previous_page_number }}">⬅️ Anterior</a>
+          {% endif %}
+
+          <span class="current">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente ➡️</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Último ⏭️</a>
+          {% endif %}
+        </div>
+      </div>
+
+    {% else %}
+      <div class="no-results">
+        <div class="no-results-icon">🔬</div>
+        <h4>No hay análisis realizados</h4>
+        <p>Comienza creando tu primer análisis de enfermedades en las plantaciones</p>
+       
+      </div>
+    {% endif %}
+  </div>
+</div>
+<script src="{% static 'js/core/Dashboard/Deteccion de Enfermedades/deteccion_list.js' %}"  ></script>
+{% endblock %}

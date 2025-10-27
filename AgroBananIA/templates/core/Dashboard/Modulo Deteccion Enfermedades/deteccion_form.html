@@ -1,0 +1,195 @@
+{% extends 'components/base_dashboard.html' %} 
+{% load static %} 
+{% block title%}Detección de Enfermedades - Dashboard{% endblock %} 
+{% block breadcrumb%}Detección{% endblock %} 
+{% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{% static 'css/core/Dashboard/Modulo Deteccion Enfermedades/deteccion_form.css' %}"
+/>
+{% endblock %} {% block content %}
+<div class="dashboard-header">
+  <div class="header-content">
+    <div class="header-info">
+      <h1>Detección de Enfermedades</h1>
+      <p>
+        Bienvenido al módulo de detección de enfermedades en plantas de banano.
+        Sube una imagen de la planta y nuestro sistema analizará la salud de
+        la planta para identificar posibles enfermedades.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="detection-grid">
+  <!-- Subida de imagen -->
+  <div class="detection-card">
+    <h3>Subir Imagen de Planta</h3><br>
+    <form
+      id="uploadForm"
+      method="post"
+      action="{% url 'core:deteccion_analizar' %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <div
+        class="upload-zone"
+        onclick="document.getElementById('imageInput').click()"
+        id="dropZone"
+      >
+        <div class="upload-icon">📷</div>
+        <p id="fileLabel">
+          Arrastra una imagen aquí o haz clic para seleccionar
+        </p>
+        <small style="color: #666; margin-top: 5px">
+          Formatos permitidos: JPG, PNG, JPEG (máx. 10MB)
+        </small>
+      </div>
+
+      <input
+        type="file"
+        id="imageInput"
+        name="imagen"
+        accept="image/*"
+        style="display: none"
+        required
+      />
+
+      <div id="previewContainer" style="display: none; margin-top: 20px;">
+        <div
+          class="file-info"
+          id="fileInfo"
+          style="color: #000 !important"
+        ></div>
+        <img
+          id="previewImg"
+          alt="Vista previa de la imagen"
+          style="max-width: 100%;   "
+        />
+        <div style="text-align: center; margin-top: 15px">
+          <button type="button" onclick="removePreview()" class="btn-secondary">
+            🗑️ Eliminar Imagen
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        id="submitBtn"
+        style="margin-top: 20px; width: 100%"
+      >
+        🔬 Iniciar Análisis
+      </button>
+    </form>
+  </div>
+
+  {% if diagnostico %}
+
+  <div class="diagnosis-section">
+    {% comment %} <div class="diagnosis-header">
+      <h3>Resultado del Diagnóstico</h3>
+    </div> {% endcomment %}
+
+    <div class="diagnosis-card">
+      <!-- Diagnosis Result -->
+      <div class="diagnosis-result">
+        <div class="result-label">Diagnóstico</div>
+        <div class="result-value" id="diagnosis">{{ diagnostico }}</div>
+      </div>
+
+      <!-- Confidence Level -->
+      <div class="confidence-section">
+        <div class="confidence-header">
+          <div class="label">Nivel de Confianza</div>
+          <div class="value">{{ probabilidad }}%</div>
+        </div>
+
+        <div class="confidence-meter">
+          <div class="meter-track"></div>
+          <div class="meter-fill" style="width: {{ probabilidad }}%"></div>
+          <div class="confidence-markers">
+            <span class="marker low" style="left: 33%"></span>
+            <span class="marker medium" style="left: 66%"></span>
+            <span class="marker high" style="left: 100%"></span>
+          </div>
+        </div>
+
+        <div class="confidence-bands">
+          <div class="band low" style="width: 33%"></div>
+          <div class="band medium" style="width: 33%"></div>
+          <div class="band high" style="width: 34%"></div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recommendations-section">
+        <div class="recommendations-header">
+          <h4>Recomendaciones</h4>
+        </div>
+        <div class="recommendations-content">
+          <p>{{ recomendaciones }}</p>
+        </div>
+      </div>
+      <div style="margin-top: 30px">
+        <h3 style="color: black; margin-bottom: 15px; font-size: 1.3rem">
+          Imágenes del Análisis
+        </h3>
+      </div>
+      <div class="image-grid">
+        {% if imagen_original %}
+        <div class="image-grid-item">
+          <img
+            src="{{ imagen_original.url }}"
+            alt="{{ imagen_original.nombre }}"
+            onclick="openImageModal('{{ imagen_original.url }}', '{{ imagen_original.nombre }}')"
+          />
+          <div class="image-caption">Imagen Original</div>
+        </div>
+        {% endif %} {% if imagenes %} {% for img in imagenes %}
+        <div class="image-grid-item">
+          <img
+            src="{{ img.url }}"
+            alt="{{ img.nombre }}"
+            onclick="openImageModal('{{ img.url }}', '{{ img.nombre }}')"
+          />
+          <div class="image-caption">{{ img.nombre }}</div>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  </div>
+
+  <!-- Sección de Imágenes Procesadas -->
+
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">Analizando imagen...</div>
+      <div class="loading-subtitle">
+        Por favor espera mientras procesamos tu imagen
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeImageModal()">
+    <span class="modal-close">×</span>
+    <div class="modal-content">
+      <img id="modalImg" />
+      <p id="modalCaption" class="modal-caption"></p>
+    </div>
+  </div>
+
+  <div
+    id="alertContainer"
+    style="position: fixed; top: 20px; right: 20px; z-index: 1000"
+  ></div>
+  <script src="{% static 'js/core/Dashboard/Deteccion de Enfermedades/deteccion_form.js' %}"></script>
+
+
+  {% endblock %}
+</div>

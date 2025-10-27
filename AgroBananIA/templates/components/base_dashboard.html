@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}Dashboard Modular - Plantación de Banano{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/core/Dashboard/base_dashboard.css' %}" />
+
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <!-- Mobile Menu Button -->
+    <button
+      class="mobile-menu-btn"
+      aria-label="Abrir menú"
+      onclick="toggleMobileSidebar()"
+    >
+      ☰
+    </button>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div
+      class="sidebar-overlay"
+      onclick="toggleMobileSidebar()"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Barra lateral principal">
+      <button
+        class="sidebar-toggle"
+        aria-expanded="true"
+        onclick="toggleSidebar()"
+      >
+        ←
+      </button>
+
+      <div class="logo" role="img" aria-label="AgrobananIA logo">
+        <div class="logo-icon">AB</div>
+        <span class="logo-text">AgrobananIA</span>
+      </div>
+
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <div class="nav-section">
+          <a
+            class="nav-item {% if active_module == 'inicio' %}active{% endif %}"
+            href="{% url 'core:dashboard' %}"
+            data-module="inicio"
+          >
+            <div class="nav-icon">🏠</div>
+            <span>Inicio</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Módulos</div>
+
+          <a
+            class="nav-item {% if active_module == 'deteccion' %}active{% endif %}"
+            href="{% url 'core:deteccion_list' %}"
+            data-module="deteccion"
+          >
+            <div class="nav-icon">🔬</div>
+            <span>Detección de Enfermedades</span>
+          </a>
+
+          <a
+            class="nav-item {% if active_module == 'datos' %}active{% endif %}"
+            href="#"
+            data-module="datos"
+          >
+            <div class="nav-icon">📊</div>
+            <span>Gestión de Datos</span>
+          </a>
+
+          <a
+            class="nav-item {% if active_module == 'recomendaciones' %}active{% endif %}"
+            href="#"
+            data-module="recomendaciones"
+          >
+            <div class="nav-icon">💡</div>
+            <span>Recomendaciones</span>
+          </a>
+
+          <a
+            class="nav-item {% if active_module == 'informes' %}active{% endif %}"
+            href="#"
+            data-module="informes"
+          >
+            <div class="nav-icon">📃</div>
+            <span>Informes</span>
+          </a>
+
+          <a
+            class="nav-item {% if active_module == 'alertas' %}active{% endif %}"
+            href="#"
+            data-module="alertas"
+          >
+            <div class="nav-icon">📈</div>
+            <span>Estadísticas</span>
+          </a>
+
+          <a
+            class="nav-item {% if active_module == 'alertas-comunitarias' %}active{% endif %}"
+            href=""
+            data-module="alertas-comunitarias"
+          >
+            <div class="nav-icon">📢</div>
+            <span>Alertas Comunitarias</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Administración</div>
+
+          <a
+            class="nav-item {% if active_module == 'admin' %}active{% endif %}"
+            href="#"
+            data-module="admin"
+          >
+            <div class="nav-icon">⚙️</div>
+            <span>Configuración</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <div class="nav-icon">🔓</div>
+            <span>Cerrar sesión</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper" id="mainWrapper">
+      <!-- Main Content Area -->
+      <div class="main-content">
+        {% block content %}
+        <!-- Aquí puedes insertar el contenido de cada módulo -->
+        {% endblock %}
+      </div>
+    </div>
+
+    <script>
+      // Función para colapsar/expandir sidebar
+      function toggleSidebar() {
+          const sidebar = document.getElementById('sidebar');
+          const mainWrapper = document.getElementById('mainWrapper');
+          const toggleBtn = document.querySelector('.sidebar-toggle');
+
+          sidebar.classList.toggle('collapsed');
+          mainWrapper.classList.toggle('expanded');
+
+          // Cambiar icono del botón
+          toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '→' : '←';
+      }
+
+      // Función para sidebar móvil
+      function toggleMobileSidebar() {
+          const sidebar = document.getElementById('sidebar');
+          const overlay = document.querySelector('.sidebar-overlay');
+
+          sidebar.classList.toggle('mobile-open');
+          overlay.classList.toggle('active');
+      }
+
+      // Cerrar sidebar móvil al redimensionar ventana
+      window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+              const sidebar = document.getElementById('sidebar');
+              const overlay = document.querySelector('.sidebar-overlay');
+              sidebar.classList.remove('mobile-open');
+              overlay.classList.remove('active');
+          }
+      });
+
+      {% block extra_js %}{% endblock %}
+    </script>
+  </body>
+</html>
