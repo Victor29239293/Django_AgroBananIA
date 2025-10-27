@@ -1,12 +1,12 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import HomeView
+from app.security.views import LoginView
 
-app_name = 'core'
+app_name = 'security'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('login/', LoginView.as_view(), name='login'),
 ]
 
 if settings.DEBUG:

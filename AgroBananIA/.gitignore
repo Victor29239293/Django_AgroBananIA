@@ -1,0 +1,159 @@
+.# .gitignore completo para proyecto Django (Python) en Windows
+.# Incluye entornos virtuales, archivos compilados, caches, IDEs, secretos y artefactos de build
+
+# Entornos virtuales
+# Entornos virtuales
+venv/
+.venv/
+env/
+ENV/
+
+# Byte-compiled / optimized / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Installer logs
+pip-log.txt
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+
+# If using Django cache or file-based session backends
+session_security.json
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code
+.vscode/
+
+# JetBrains (PyCharm, IntelliJ)
+.idea/
+*.iml
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Translations
+*.mo
+*.pot
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# dotenv
+.env
+.env.*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+
+# Backup files
+*.bak
+
+# Coverage & test reports
+nosetests.xml
+coverage.xml
+test-results/
+
+# Distribution / packaging leftovers
+eggs/
+*.egg-info/
+dist/
+build/
+
+# VS Code workspace storage (keep settings/launch if needed)
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Local history for some editors
+.history/
+
+# Rust / native
+*.so
+*.dylib
+
+# Misc
+PSReadLineConsoleHost_history.txt
+
+# Terraform & Vagrant (si se usan)
+.terraform/
+.vagrant/
+
+# Ignore build artifacts from C extensions
+*.o
+*.a
+*.dll
+
+# Optional: build artefacts para front-end tooling
+/.parcel-cache/
+/.next/
+/.nuxt/
+
+# End of .gitignore
+.venv/
