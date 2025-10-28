@@ -1,12 +1,14 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from app.security.views import LoginRegisterView
+from app.security.views import LoginRegisterView,LogoutView
 
 app_name = 'security'
 
 urlpatterns = [
     path('login/', LoginRegisterView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    
 ]
 
 if settings.DEBUG:

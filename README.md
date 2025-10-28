@@ -9,16 +9,14 @@ Sistema inteligente de detección automática de enfermedades en hojas de banano
 
 ## 📋 Tabla de Contenidos
 
-- [Características](#-características)
-- [Tecnologías](#-tecnologías)
-- [Demostración](#-demostración)
-- [Instalación](#-instalación)
-- [Uso](#-uso)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Modelo CNN](#-modelo-cnn)
-- [Contribución](#-contribución)
-- [Licencia](#-licencia)
-- [Contacto](#-contacto)
+- [🍌 Sistema de Detección de Enfermedades en Hojas de Banano](#-sistema-de-detección-de-enfermedades-en-hojas-de-banano)
+  - [📋 Tabla de Contenidos](#-tabla-de-contenidos)
+  - [✨ Características](#-características)
+  - [🛠️ Tecnologías](#️-tecnologías)
+  - [🎬 Demostración](#-demostración)
+    - [Módulo de Detección](#módulo-de-detección)
+  - [📦 Instalación](#-instalación)
+    - [Requisitos Previos](#requisitos-previos)
 
 ## ✨ Características
 
@@ -33,8 +31,8 @@ Sistema inteligente de detección automática de enfermedades en hojas de banano
 
 - **Lenguaje**: Python 3.8+
 - **Deep Learning**: TensorFlow/Keras
-- **Framework Web**: Django/Flask
-- **Base de Datos**: PostgreSQL/SQLite
+- **Framework Web**: Django
+- **Base de Datos**: SQLite
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Visualización**: Matplotlib, Plotly
 - **Arquitectura**: CNN (Convolutional Neural Networks)
@@ -42,7 +40,7 @@ Sistema inteligente de detección automática de enfermedades en hojas de banano
 ## 🎬 Demostración
 
 ### Módulo de Detección
-
+<img src="static/images/deteccion.png" alt="Logo" width="200">
 
 ## 📦 Instalación
 

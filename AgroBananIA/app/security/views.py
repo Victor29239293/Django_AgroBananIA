@@ -107,9 +107,9 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         messages.success(request, 'Has cerrado sesión exitosamente.')
-        return redirect('login')
+        return redirect('security:login')
     
     def post(self, request):
         logout(request)
         messages.success(request, 'Has cerrado sesión exitosamente.')
-        return redirect('login')
+        return redirect('security:login')
