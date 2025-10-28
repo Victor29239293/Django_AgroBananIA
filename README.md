@@ -40,8 +40,7 @@ Sistema inteligente de detección automática de enfermedades en hojas de banano
 ## 🎬 Demostración
 
 ### Módulo de Detección
-<img src="static/images/deteccion.png" alt="Logo" width="200">
-
+![Logo AgroBananIA](./AgroBananIA/static/images/deteccion.png)
 ## 📦 Instalación
 
 ### Requisitos Previos
