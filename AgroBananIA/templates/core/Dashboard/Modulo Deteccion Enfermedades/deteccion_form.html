@@ -94,7 +94,7 @@
       <!-- Diagnosis Result -->
       <div class="diagnosis-result">
         <div class="result-label">Diagnóstico</div>
-        <div class="result-value" id="diagnosis">{{ diagnostico }}</div>
+  <div class="result-value {% if diagnostico_numero is not None %}{% if diagnostico_numero == 1 %}success{% elif diagnostico_numero == 2 %}warning{% else %}danger{% endif %}{% endif %}" id="diagnosis">{{ diagnostico }}</div>
       </div>
 
       <!-- Confidence Level -->
@@ -106,7 +106,7 @@
 
         <div class="confidence-meter">
           <div class="meter-track"></div>
-          <div class="meter-fill" style="width: {{ probabilidad }}%"></div>
+          <div class="meter-fill {% if diagnostico_numero is not None %}{% if diagnostico_numero == 1 %}success{% elif diagnostico_numero == 2 %}warning{% else %}danger{% endif %}{% endif %}" style="width: {{ probabilidad }}%"></div>
           <div class="confidence-markers">
             <span class="marker low" style="left: 33%"></span>
             <span class="marker medium" style="left: 66%"></span>

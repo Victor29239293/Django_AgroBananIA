@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app.core.views import HomeView, DashboardView
 from app.core.view.Modulo_deteccion_Enfermedades.Deteccion_enfermedad_view import DeteccionListView,analizar_imagen
-
+from app.core.view.Modulo_Alerta_Comunitaria.Alerta_comunitaria_view import AlertaComunitariaView
 app_name = 'core'
 
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('deteccion/', DeteccionListView.as_view(), name='deteccion_list'),
     path('deteccion/analizar/', analizar_imagen, name='deteccion_analizar'),
+    path('alertas/', AlertaComunitariaView.as_view(), name='alertas'),
 ]
 
 if settings.DEBUG:

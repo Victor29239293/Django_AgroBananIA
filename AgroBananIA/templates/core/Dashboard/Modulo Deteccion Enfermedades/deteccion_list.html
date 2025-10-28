@@ -17,7 +17,7 @@
     <div class="floating-elements"></div>
     <div class="container-header">
       <a href="{% url 'core:deteccion_analizar' %}" class="add-analysis-btn">
-      Nuevo Análisis
+        Nuevo Análisis
       </a>
     </div>
 
@@ -39,62 +39,68 @@
 
       <div class="analysis-grid">
         {% for analisis_item in page_obj %}
-        <div class="analysis-card">
-          <div class="card-header">
-            <div class="diagnosis-badge">
-              🦠 {{ analisis_item.enfermedad_detectada }}
-            </div>
-            <div class="probability-indicator">
-              <div class="probability-circle probability-low">
-               ID: {{ analisis_item.id }}
+          <div class="analysis-card">
+            <div class="card-header">
+              <div class="diagnosis-badge">
+                🦠 {{ analisis_item.enfermedad_detectada }}
+              </div>
+              <div class="probability-indicator">
+                <div class="probability-circle">
+                  <span class="probability-text">ID: {{ analisis_item.id }}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="card-details">
-            <div class="detail-item">
-              <span class="detail-label">Fecha de Análisis</span>
-              <span class="detail-value">📅 {{ analisis_item.fecha_analisis|date:"d/m/Y" }}</span>
+            <div class="card-details">
+              <div class="detail-item">
+                <span class="detail-label">Fecha de Análisis</span>
+                <span class="detail-value">📅 {{ analisis_item.fecha_analisis|date:"d/m/Y" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Probabilidad</span>
+                <span class="detail-value">{{ analisis_item.probabilidad|floatformat:2 }}%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Finca</span>
+                <span class="detail-value">{{ analisis_item.imagen.plantacion.nombre_finca }}</span>
+              </div>
             </div>
-            <div class="detail-item">
-             
-            </div>
-          </div>
 
-          <div class="card-actions">
-            <a href="{% url 'core:detalle_analisis' analisis_item.id %}" class="view-analysis-btn">
-              👁️ Ver Detalles
-            </a>
+            <div class="card-actions">
+              <a href="{% url 'core:detalle_analisis' analisis_item.id %}" class="view-analysis-btn">
+                👁️ Ver Detalles
+              </a>
+            </div>
           </div>
-        </div>
         {% endfor %}
       </div>
 
       <div class="pagination-container">
         <div class="pagination">
           {% if page_obj.has_previous %}
-            <a href="?page=1">⏮️ Primero</a>
-            <a href="?page={{ page_obj.previous_page_number }}">⬅️ Anterior</a>
+            <a href="?page=1" class="pagination-link">⏮️ Primero</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">⬅️ Anterior</a>
           {% endif %}
 
-          <span class="current">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+          <span class="current-page">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
 
           {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Siguiente ➡️</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Último ⏭️</a>
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Siguiente ➡️</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">Último ⏭️</a>
           {% endif %}
         </div>
       </div>
-
     {% else %}
       <div class="no-results">
         <div class="no-results-icon">🔬</div>
         <h4>No hay análisis realizados</h4>
         <p>Comienza creando tu primer análisis de enfermedades en las plantaciones</p>
-       
+        <a href="{% url 'core:deteccion_analizar' %}" class="add-analysis-btn">
+          Realizar Primer Análisis
+        </a>
       </div>
     {% endif %}
   </div>
 </div>
-<script src="{% static 'js/core/Dashboard/Deteccion de Enfermedades/deteccion_list.js' %}"  ></script>
+<script src="{% static 'js/core/Dashboard/Deteccion de Enfermedades/deteccion_list.js' %}"></script>
 {% endblock %}

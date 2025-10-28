@@ -9,20 +9,48 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2" />
     {% block extra_head %}{% endblock %}
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar">
-     <div class="logo"><span>AgroBanan</span>IA</div>
+      <div class="logo"><span>AgroBanan</span>IA</div>
       <ul class="nav-links">
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#caracteristicas">Características</a></li>
         <li><a href="#como-funciona">Cómo Funciona</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
-      <a href="{% url 'security:login' %}" class="nav-btn">Iniciar Sesión</a>
+      
+      <!-- Conditional Navbar Button based on Authentication -->
+      {% if user.is_authenticated %}
+        <div class="user-menu">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span class="username">{{ user.first_name|default:user.username }}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="{% url 'core:dashboard' %}" class="dropdown-item">
+              <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href=" " class="dropdown-item">
+              <i class="fas fa-user"></i> Mi Perfil
+            </a>
+            <a href=" " class="dropdown-item">
+              <i class="fas fa-cog"></i> Configuración
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href=" " class="dropdown-item logout">
+              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      {% else %}
+        <a href="{% url 'security:login' %}" class="nav-btn">Iniciar Sesión</a>
+      {% endif %}
+      
       <div class="mobile-menu">
         <i class="fas fa-bars"></i>
       </div>
@@ -67,5 +95,36 @@
         </p>
       </div>
     </footer>
+
+    <script>
+      // Toggle user dropdown menu
+      document.addEventListener('DOMContentLoaded', function() {
+        const userMenu = document.querySelector('.user-menu');
+        if (userMenu) {
+          const userInfo = userMenu.querySelector('.user-info');
+          const dropdownMenu = userMenu.querySelector('.dropdown-menu');
+          
+          userInfo.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+          });
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function() {
+            dropdownMenu.classList.remove('show');
+          });
+        }
+        
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenu) {
+          mobileMenu.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+          });
+        }
+      });
+    </script>
   </body>
 </html>

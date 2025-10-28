@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.views import View
+from django.views.generic import ListView
 from django.conf import settings
 from django.contrib import messages
+from app.core.models import ResultadoAnalisis
 from AgroBananIA.utils.diagnostic import (
     predict_with_custom,
     obtener_nombre_enfermedad_custom,
     obtener_recomendaciones_custom,
-    segment_and_save_custom
+    segment_and_save
 )
 import os
 import shutil
@@ -17,12 +18,17 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 
-class DeteccionListView(View):
+
+class DeteccionListView(ListView):
     """Vista principal para el listado del módulo de detección"""
-    def get(self, request):
-        return render(request, 'core/Dashboard/Modulo Deteccion Enfermedades/deteccion_list.html')
+    model = ResultadoAnalisis
+    template_name = 'core/Dashboard/Modulo Deteccion Enfermedades/deteccion_list.html'
+    context_object_name = 'detecciones'
 
-
+    def get_queryset(self):
+        return ResultadoAnalisis.objects.filter(imagen__plantacion__usuario=self.request.user)
+    
+    
 # --------------------- FUNCIÓN DE ANÁLISIS ---------------------
 
 def analizar_imagen(request):
@@ -88,11 +94,11 @@ def analizar_imagen(request):
 
             # ========== PASO 2: SEGMENTACIÓN ADAPTATIVA ==========
             logger.info("Iniciando segmentación adaptativa...")
-            paths_dict = segment_and_save_custom(
+            paths_dict = segment_and_save(
                 image_path=ruta_temp,
                 output_dir=carpeta_resultados,
-                predicted_class=diagnostico_numero,  # Pasar la clase predicha
-                adaptive=True  # Activar segmentación adaptativa
+                # predicted_class=diagnostico_numero,  # Pasar la clase predicha
+                # adaptive=True  # Activar segmentación adaptativa
             )
             
             logger.info(f"Segmentación completada. Archivos generados: {len(paths_dict)}")
