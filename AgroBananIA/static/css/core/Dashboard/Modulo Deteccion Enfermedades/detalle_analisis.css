@@ -1,0 +1,397 @@
+ /* Variables de colores */
+  :root {
+    --primary-green: #27ae60;
+    --light-green: #2ecc71;
+    --blue-accent: #3498db;
+    --dark-text: #2c3e50;
+    --light-text: #7f8c8d;
+    --white: #ffffff;
+    --light-bg: #f8f9fa;
+    --border-color: #e9ecef;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --radius: 8px;
+    --transition: all 0.3s ease;
+  }
+
+  /* Contenedor principal */
+  .analysis-container {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  /* Header compacto */
+  .analysis-header {
+    background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+    color: var(--white);
+    padding: 25px 30px;
+    border-radius: var(--radius);
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .analysis-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
+  .analysis-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1rem;
+  }
+
+  /* Grid de información */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+
+  .info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-content {
+    appearance: 15px;
+  }
+
+  .detail-row {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .detail-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--light-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .detail-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--dark-text);
+  }
+
+  /* Badge de estado */
+  .status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--primary-green);
+    color: var(--white);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Barra de probabilidad */
+  .probability-container {
+    margin-top: 10px;
+  }
+
+  .probability-bar {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .probability-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+    border-radius: 4px;
+    transition: width 1s ease-out;
+  }
+
+  .probability-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    text-align: center;
+  }
+
+  /* Tarjeta de recomendaciones */
+  .recommendations-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-green);
+  }
+
+  .recommendations-content {
+    background: rgba(39, 174, 96, 0.05);
+    padding: 20px;
+    border-radius: var(--radius);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--dark-text);
+  }
+
+  /* Sección de imágenes */
+  .images-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+  }
+
+  .images-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+  }
+
+  .images-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: var(--primary-green);
+    border-radius: 2px;
+  }
+
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .image-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+  }
+
+  .image-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .image-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .image-wrapper {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+
+  .image-wrapper:hover img {
+    transform: scale(1.02);
+  }
+
+  .image-caption {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .no-image {
+    background: var(--light-bg);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius);
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--light-text);
+  }
+
+  .no-image-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+  }
+
+  /* Botones de acción */
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 25px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--blue-accent);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: var(--primary-green);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-secondary:hover {
+    background: #229954;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .analysis-container {
+      padding: 15px;
+    }
+
+    .analysis-header {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .analysis-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .images-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+
+  /* Animaciones */
+  .analysis-container {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .image-item {
+    animation: slideUp 0.6s ease-out;
+    animation-fill-mode: both;
+  }
+
+  .image-item:nth-child(1) { animation-delay: 0.1s; }
+  .image-item:nth-child(2) { animation-delay: 0.2s; }
+  .image-item:nth-child(3) { animation-delay: 0.3s; }
+  .image-item:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

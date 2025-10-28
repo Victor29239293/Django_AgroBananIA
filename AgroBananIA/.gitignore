@@ -43,7 +43,7 @@ db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
-static/
+
 
 # If using Django cache or file-based session backends
 session_security.json
